@@ -1,0 +1,13 @@
+<coordinator-app name="HDFS Balancer" frequency="${coord:days(7)}" start="${startTime}" end="${endTime}" timezone="${timeZoneDef}" xmlns="uri:oozie:coordinator:0.1">
+   <action>
+      <workflow>
+         <app-path>${appPath}</app-path>
+         <configuration>
+            <property>
+              <name>start_date</name>
+              <value>${startTime}</value>
+            </property>
+         </configuration>
+      </workflow>
+   </action>     
+</coordinator-app>

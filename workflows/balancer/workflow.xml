@@ -1,0 +1,30 @@
+<!--******************************************-->
+<!--workflow.xml                              -->
+<!--******************************************-->
+
+<workflow-app name="HDFS Balancer" xmlns="uri:oozie:workflow:0.3">
+    <start to="balancer"/>
+    <action name="balancer">
+        <shell xmlns="uri:oozie:shell-action:0.1">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                  <name>mapred.job.queue.name</name>
+                  <value>${queueName}</value>
+                </property>
+            </configuration>
+            <exec>${shellScript}</exec>
+	    <argument>${bandRequired}</argument>
+	    <argument>${balancingThreshold}</argument>
+ 	    <argument>${hadoopUserName}</argument>
+            <file>${scriptPath}#${shellScript}</file>
+        </shell>
+        <ok to="end"/>
+        <error to="killAction"/>
+    </action>
+    <kill name="killAction">
+        <message>"Killed job due to error"</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>
